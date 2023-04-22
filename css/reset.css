@@ -1,0 +1,88 @@
+/* CSS reset代码 */
+blockquote,body,button,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,input,legend,li,ol,p,pre,td,textarea,th,ul {
+    margin: 0;
+    padding: 0
+    /* <dl> 标签定义一个描述列表。 */
+
+/* <dl> 标签与 <dt> （定义项目/名字）和 <dd> （描述每一个项目/名字）一起使用。 */
+}
+/* tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif都是字体系列 */
+/* 12px/1.5 表示12px字体大小 1.5em行高 */
+/* fieldset 元素可将表单内的相关元素分组。
+
+<fieldset> 标签将表单内容的一部分打包，生成一组相关表单的字段。
+
+当一组表单元素放到 <fieldset> 标签内时，浏览器会以特殊方式来显示它们，它们可能有特殊的边界、3D 效果，或者甚至可创建一个子表单来处理这些元素。 */
+body,button,input,select,textarea {
+    font: 12px/1.5 tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-size: 100%
+}
+
+address,cite,dfn,em,var {
+    font-style: normal
+    /* <dfn>定义项目</dfn><br> */
+    /* <var>变量</var> */
+    /* <em>强调文本</em><br> */
+    /* <cite> 标签 通常用于在HTML语言中表示它所包含的文本对某个参考文献的引用，比如书籍或者杂志的标题。 按照惯例，引用的文本将以斜体显示。 */
+    /* <address> 标签定义文档或文章的作者/拥有者的联系信息。 如果 <address> 元素位于 <body> 元素内，则它表示文档联系信息。 */
+}
+
+code,kbd,pre,samp {
+    font-family: courier new,courier,monospace
+    /* <samp>计算机样本</samp><br> */
+    /* <kbd>键盘输入</kbd><br> */
+}
+
+small {
+    font-size: 12px
+}
+
+ol,ul {
+    list-style: none
+}
+
+a {
+    text-decoration: none
+}
+
+a:hover {
+    text-decoration: underline
+}
+
+/* 下面是上标和下标的标准化操作 */
+sup {
+    vertical-align: text-top
+}
+
+sub {
+    vertical-align: text-bottom
+}
+
+
+legend {
+    color: #000
+    /* legend 元素为 fieldset 元素定义标题（caption）。 */
+}
+
+fieldset,img {
+    border: 0
+    /* fieldset 元素可将表单内的相关元素分组。 */
+}
+
+button,input,select,textarea {
+    font-size: 100%
+}
+
+button {
+    border-radius: 0
+}
+
+table {
+    border-collapse: collapse;
+    /* 相邻的单元格共用同一条边框（采用 collapsed-border 表格渲染模型）。 */ 
+    border-spacing: 0
+    /* border-spacing 属性指定相邻单元格边框之间的距离（只适用于  collapsed-border 表格渲染模型 ） */
+}

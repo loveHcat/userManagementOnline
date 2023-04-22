@@ -1,0 +1,186 @@
+/* 头部内容设置相关的样式 */
+section{
+    width: 1145px;
+
+ 
+    margin: 0 auto;
+}
+.header{
+    margin-top: 25px;
+
+}
+
+/* 大标题 */
+.header>h1{
+font-size: 36px;
+}
+/* 小标题区块 */
+.operatorPanel{
+    height: 40px;
+    background:#347AB6;
+    border-radius: 5px 5px 0 0;
+    font-size: 16px;
+    color: white;
+    line-height: 40px;
+    padding-left:15px;
+}
+.inputRegion{
+    display: flex;
+    justify-content:center;
+    align-items:center;    
+}
+/* 搜索框和添加表单区块 */
+.header div:nth-child(3){
+    height: 66px;
+    border: 1px solid #347AB6;
+    border-radius: 5px 5px 0 0;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+/* 对其中的input进行调整 */
+.inputRegion input{
+    width: 170px;
+    height: 36px;
+    border-radius: 5px;
+    border: 1px solid #D2D2D2;
+}
+/* 添加用户区块 */
+.enterRegion{
+    height: 66px;
+    line-height: 66px;
+    display: flex;
+    justify-content:space-between;
+}
+/* 对添加按钮进行设置 */
+.operatorButton{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+}
+.operatorButton button{
+    height: 36px;
+    width: 56px;
+    background-color: #347AB6;
+    color: #fff;
+    border-radius: 5px;
+    border: 1px solid #D2D2D2;
+}
+/* 添加搜索区块 */
+.search{
+    
+    height:66px;
+    margin-left: 5px;
+    line-height: 66px;
+}
+.displayPanel{
+    height: 40px;
+    background:#347AB6;
+    border-radius: 5px 5px 0 0;
+    font-size: 16px;
+    color: white;
+    line-height: 40px;
+    padding-left:15px;
+    width: 1130px;
+    margin: 0 auto;
+}
+
+
+
+/* 数据内容设置相关的样式 */
+.data{
+    margin-top: 20px;
+}
+.data>table{
+    width: 1145px;
+    border: 1px solid #D2D2D2;
+    table-layout: fixed;
+    /* 固定单元格的大小作用 */
+}
+.dataTable td, .dataTable th{
+    border: 1px solid #D2D2D2;
+    padding: 0 5PX;
+}
+.dataTable th{
+   text-align: left;
+}
+.dataTable tr{
+    height: 40px;
+}
+.dataTable tbody tr:nth-child(odd){
+    background: #f9f9f9;;
+}
+
+.dataTable button{
+    width: 36px;
+    height: 24px;
+    border-radius: 5px;
+    color: #fff;
+    margin-left: 5px;
+}
+
+.dataTable button:nth-child(odd){
+   background: #EBAC4A;
+   border: 1px solid #D3A154
+}
+.dataTable button:nth-child(even){
+    background: #D75350;
+    border: 1px solid #C36D66
+ }
+ 
+/* 给所有按钮加上鼠标手型 */
+button{
+    cursor: pointer;
+}
+
+/* 定义遮罩层 */
+.mask{
+    width: 100%;
+    height: 100%;
+    /* 因为我们是针对浏览器的窗口来做的，所有加上定位*/
+     position: fixed;
+     background: #ccc;
+     left: 0;
+     top: 0;
+     /*使用fixed定位，必须要给位置，否则无效 */
+     opacity: 0.5;
+     z-index: 100;
+     /* 设置遮罩的页面层级 */
+     display: none;
+}
+/* 修改面板 */
+.updatePanle{
+    width: 300px;
+    height: 300px;
+    background: white;
+    position: fixed;
+    z-index: 101;
+    display: none;
+    padding: 10px 20px;
+    /* 加上padding后由于盒子属性会使盒子变大，我们要改变盒子样式来使其保持大小 */
+    box-sizing: border-box;
+    /* 使用border-box可以有效解决边缘叠层的问题 ,即让内边距和边框包含在宽高以内，如果就是想要300px大小，我们最好使用，因为默认盒子会把盒子搞大，边距不算在盒子内部*/
+}
+.updatePanle svg{
+    width: 23px;
+    height: 23px;
+}
+.updatePanle span{
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+/* 给修改表格设置样式 */
+.updatePanle table{
+    width: 300px;
+
+}
+.updatePanle table tr{
+ height: 50px;
+}
+.updatePanle h2{
+    font-size: 24px;
+    text-align: center;
+    user-select: none;
+}

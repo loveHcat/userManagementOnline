@@ -397,19 +397,19 @@ searchBtn.onclick=function(){
        //获取到每个员工对象
        let empPanelObj=empData[i];
     // 如何通过js判断字段是否包含要查询的值[id,name,age,createtime]
-        if((empPanelObj.id.includes(searchId)==true)&&(empPanelObj.name.includes(searchName)==true)&&(empPanelObj.age.includes(searchAge)==true)&&(typeof searchId == 'string' && searchId.length > 0)&&(((typeof searchAge.toString()) == 'string') && (searchAge.toString).length > 0)&&(typeof searchName == 'string' && searchName.length > 0)){
+        if((empPanelObj.id.includes(searchId)==true)&&(empPanelObj.name.includes(searchName)==true)&&(empPanelObj.age.includes(searchAge)==true)&&(typeof searchId == 'string' && searchId.length > 0)&&(((typeof searchAge.toString()) == 'string') && (searchAge.toString()).length > 0)&&(typeof searchName == 'string' && searchName.length > 0)){
             var newPanelTr=tbodyEle.insertRow(count);
             setTd(empPanelObj,newPanelTr);
             setUpdateDeleteEvent();
             Toast("搜索成功",3000);//这里是全输入的情况，但是要注意全部没输入的话也包括了，所有我们需要把全部没输入加个判断直接不进入循环,并且我们给其加上了不为空的条件，只要当全部输入之后，才会进行这个判断
         };
-        if((searchId == undefined || searchId === '')&&(empPanelObj.name.includes(searchName)==true)&&(empPanelObj.age.includes(searchAge)==true)&&(((typeof searchAge.toString()) == 'string') && (searchAge.toString).length > 0)&&(typeof searchName == 'string' && searchName.length > 0)){
+        if((searchId == undefined || searchId === '')&&(empPanelObj.name.includes(searchName)==true)&&(empPanelObj.age.includes(searchAge)==true)&&(((typeof searchAge.toString()) == 'string') && (searchAge.toString()).length > 0)&&(typeof searchName == 'string' && searchName.length > 0)){
             var newPanelTr=tbodyEle.insertRow(count);
             setTd(empPanelObj,newPanelTr);
             setUpdateDeleteEvent();
             Toast("搜索成功",3000);//这里是Id空到没写的情况，Name和Age输入了进行搜索,Name和Age不能为空
         };
-        if((empPanelObj.id.includes(searchId)==true)&&(searchName == undefined || searchName === '')&&(empPanelObj.age.includes(searchAge)==true)&&(typeof searchId == 'string' && searchId.length > 0)&&(((typeof searchAge.toString()) == 'string') && (searchAge.toString).length > 0)){
+        if((empPanelObj.id.includes(searchId)==true)&&(searchName == undefined || searchName === '')&&(empPanelObj.age.includes(searchAge)==true)&&(typeof searchId == 'string' && searchId.length > 0)&&(((typeof searchAge.toString()) == 'string') && (searchAge.toString()).length > 0)){
             var newPanelTr=tbodyEle.insertRow(count);
             setTd(empPanelObj,newPanelTr);
             setUpdateDeleteEvent();

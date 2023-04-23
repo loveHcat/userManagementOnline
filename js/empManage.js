@@ -68,7 +68,7 @@ if(checkDate2(realNameEleValue,userAgeELeValue)){
         }
     //把newEmpObj放到数组的末尾,使用push进行插入尾部即可
     empData.push(newEmpObj);
-    Toast("添加成功，目前已保存的用户个数是"+empData.length+"个",3000);
+    Toast("添加成功",3000);
     
     //我们直接将数据添加道tbody里面
     var newTr=tbodyEle.insertRow(tbodyEle.rows.length);//再tboy的最后面创建一行
@@ -153,7 +153,7 @@ function deleteEmpById(deleteId){
         if(empData[i].id == deleteId){
            //如果判断相等，循环变量i就是要删除数据的下标
            empData.splice(i,1);
-           Toast("删除成功，目前系统里面的员工数量是"+empData.length+"个",3000);
+           Toast("删除成功",3000);
         };
         
     };
@@ -236,7 +236,7 @@ function Toast(msg,duration){
     // 把提示内容装进来
     m.innerHTML = msg;  
     // 把给m的div定义盒子样式
-    m.style.cssText="font-size: .32rem;color: rgb(255, 255, 255);background-color: rgba(0, 0, 0, 0.6);padding: 10px 15px;margin: 0 0 0 -60px;border-radius: 4px;position: fixed;    top: 50%;left: 50%;width: 230px;text-align: center;z-index:1000;";
+    m.style.cssText="font-size: .32rem;color: rgb(255, 255, 255);background-color: rgba(0, 0, 0, 0.6);padding: 10px 15px;margin: 0 0 0 -60px;border-radius: 4px;position: fixed;    top: 10%;left: 45%;width: 230px;text-align: center;z-index:1000;";
     // 将盒子封装好之后，放在body下面，来在HTML中显示
     document.body.appendChild(m);  
     // 设置定时器和透明度显示操作
@@ -254,7 +254,7 @@ function checkDate3(checkId,checkName,checkAge){
     let checkNameBox=checkName;
     let checkAgeBox=checkAge;
     if(checkIdBox>=0&&checkIdBox<=1000){
-       if(checkNameBox.length>=2&&checkNameBox.length<=10){
+       if((checkNameBox.length>=2&&checkNameBox.length<=10)||(checkNameBox.length==0)){
           if(checkAgeBox>=0&&checkAgeBox<=120){
             return true;
           }else{
@@ -290,6 +290,37 @@ function checkDate2(checkName,checkAge){
         return false;
     }
 };
+//校验上层搜索功能(id,name,age)和查找时的数据是否输入正确的函数封装
+//校验ID
+function checkSearchId(checkId){
+    let checkIdBox=checkId;
+    if(checkIdBox>=0&&checkIdBox<=1000){
+        return true;
+    }else{
+        Toast("ID输入不合法，请重新输入",3000);
+        return false;
+    };
+};
+// 校验姓名
+function checkSearchName(checkName){
+    let checkNameBox=checkName;
+       if((checkNameBox.length>=2&&checkNameBox.length<=10)){
+        return true;
+       }else{
+        Toast("姓名输入不合法，请重新输入",3000);
+        return false;
+       };
+};
+//校验年龄
+function checkSearchAge(checkAge){
+    let checkAgeBox=checkAge;
+          if(checkAgeBox>=0&&checkAgeBox<=120){
+            return true;
+          }else{
+            Toast("年龄输入不合法，请重新输入",3000);
+            return false;
+          }
+    };
 /*                                                             8.重置按钮功能                                                         */
 
 resetBtn.onclick=function(){
@@ -346,7 +377,6 @@ modifyBtn.onclick=function(){
 };
 }else{
     checkDate3(modifyId,modifyIdName,modifyIdAge);//id或者name或者age检测不通过，进入else，再次调用是为了弹出错误提示
-    
     };
 };
 
@@ -356,21 +386,65 @@ searchBtn.onclick=function(){
     var searchId=userIdELe.value;
     var searchName= realNameELe.value;
     var searchAge=userAgeELe.value;
-    if(checkDate3(searchId,searchName,searchAge)){
     //清空tbody的内容,每次使用这个输入调用的事件，在显示匹配的结果之前我们都清空一次
     tbodyEle.innerHTML="";
     let count=0;//用来作为符合要求的数据的下标参考
-    for (let i = 0; i < empData.length; i++){
-        tbodyEle.innerHTML="";
+    if((searchId == undefined || searchId === '')&&(searchName == undefined || searchName === '')&&(searchAge == undefined || searchAge === '')){
+        Toast("搜索框输入为空，查询无结果，请重新输入",3000);
+        tbodyEle.innerHTML="";//判断用户是不是没有输入，让用户重新输入,没有输入为空的，在进入下一步
+    }else if(checkDate3(searchId,searchName,searchAge)){
+        for (let i = 0; i < empData.length; i++){
        //获取到每个员工对象
-       var empObj=empData[i];
-   //如何通过js判断字段是否包含要查询的值[id,name,age,createtime]
-        if(empData[i].id.indexOf(searchId)!=-1||empData[i].name.indexOf(searchName)!=-1||empData[i].age.indexOf(searchAge)!=-1){
-           var newTr=tbodyEle.insertRow(count);//我们这里不能在使用i了，因为i的满足结果的插入会导致出现空行，我们最好定义一个0，在每次循环找到符合要求的结果后，我们就从最上面插入（即0行），这样就不会导致小标乱搞
-           setTd(empObj,newTr);
-           setUpdateDeleteEvent();//记得加上点击事件，不然新出现的搜索行的修改和删除直接全部失效
+       let empPanelObj=empData[i];
+    // 如何通过js判断字段是否包含要查询的值[id,name,age,createtime]
+        if((empPanelObj.id.includes(searchId)==true)&&(empPanelObj.name.includes(searchName)==true)&&(empPanelObj.age.includes(searchAge)==true)&&(typeof searchId == 'string' && searchId.length > 0)&&(((typeof searchAge.toString()) == 'string') && (searchAge.toString).length > 0)&&(typeof searchName == 'string' && searchName.length > 0)){
+            var newPanelTr=tbodyEle.insertRow(count);
+            setTd(empPanelObj,newPanelTr);
+            setUpdateDeleteEvent();
+            Toast("搜索成功",3000);//这里是全输入的情况，但是要注意全部没输入的话也包括了，所有我们需要把全部没输入加个判断直接不进入循环,并且我们给其加上了不为空的条件，只要当全部输入之后，才会进行这个判断
         };
+        if((searchId == undefined || searchId === '')&&(empPanelObj.name.includes(searchName)==true)&&(empPanelObj.age.includes(searchAge)==true)&&(((typeof searchAge.toString()) == 'string') && (searchAge.toString).length > 0)&&(typeof searchName == 'string' && searchName.length > 0)){
+            var newPanelTr=tbodyEle.insertRow(count);
+            setTd(empPanelObj,newPanelTr);
+            setUpdateDeleteEvent();
+            Toast("搜索成功",3000);//这里是Id空到没写的情况，Name和Age输入了进行搜索,Name和Age不能为空
+        };
+        if((empPanelObj.id.includes(searchId)==true)&&(searchName == undefined || searchName === '')&&(empPanelObj.age.includes(searchAge)==true)&&(typeof searchId == 'string' && searchId.length > 0)&&(((typeof searchAge.toString()) == 'string') && (searchAge.toString).length > 0)){
+            var newPanelTr=tbodyEle.insertRow(count);
+            setTd(empPanelObj,newPanelTr);
+            setUpdateDeleteEvent();
+            Toast("搜索成功",3000);//这里是Name空到没写的情况，Id和Age输入了进行搜索,Id和Age不能为空
+        };
+        if((empPanelObj.id.includes(searchId)==true)&&(empPanelObj.name.includes(searchName)==true)&&(searchAge == undefined || searchAge === '')&&(typeof searchId == 'string' && searchId.length > 0)&&(typeof searchName == 'string' && searchName.length > 0)){
+            var newPanelTr=tbodyEle.insertRow(count);
+            setTd(empPanelObj,newPanelTr);
+            setUpdateDeleteEvent();
+            Toast("搜索成功",3000);//这里是Age空到没写的情况，Id和Name输入了进行搜索,Id和Name不能为空
+        };
+        if((searchId == undefined || searchId === '')&&(searchName == undefined || searchName === '')&&(empPanelObj.age.includes(searchAge)==true)){
+            var newPanelTr=tbodyEle.insertRow(count);
+            setTd(empPanelObj,newPanelTr);
+            setUpdateDeleteEvent();
+            Toast("搜索成功",3000);//这里是Id和Name空到没写的情况，用Age输入了进行搜索
+        };
+        if((empPanelObj.id.includes(searchId)==true)&&(searchName == undefined || searchName === '')&&(searchAge == undefined || searchAge === '')){
+            var newPanelTr=tbodyEle.insertRow(count);
+            setTd(empPanelObj,newPanelTr);
+            setUpdateDeleteEvent();
+            Toast("搜索成功",3000);//这里是Age和Name空到没写的情况，用Id输入了进行搜索
+        };
+        if((searchId == undefined || searchId === '')&&(empPanelObj.name.includes(searchName)==true)&&(searchAge == undefined || searchAge === '')){
+            var newPanelTr=tbodyEle.insertRow(count);
+            setTd(empPanelObj,newPanelTr);
+            setUpdateDeleteEvent();
+            Toast("搜索成功",3000);//这里是Id和Age空到没写的情况，用Name输入了进行搜索
+        };
+        
     };
+
+    if(tbodyEle.innerHTML==""){
+        Toast("搜索失败，系统中没有符合条件的用户",3000);
+    }
 }else{
     checkDate3(searchId,searchName,searchAge);
 };

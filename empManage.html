@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>员工管理系统</title>
+    <title>用户管理系统</title>
     <!-- 引入reset的CSS文件 -->
     <link rel="stylesheet" href="./css/reset.css">
     <!-- 引入本页面的样式CSS -->
@@ -12,7 +12,11 @@
     <!-- 引入数据部分的JS文件data.js -->
     <script type="text/javascript" src="./js/data.js"></script>
     <!-- 引入逻辑部分的JS文件empManage.js -->
-    <script type="text/javascript" src="./js/empManage.js"></script>
+    <script type="text/javascript" src="./js/empManageOnline.js"></script>
+    <!-- 引入http函数，方便我们进行数据的传送和修改等等 -->
+    <script type="text/javascript" src="./lib/http.js"></script>
+    <!-- 引入组件库,方便我们进行添加的操作 -->
+    <script src="./lib/form-serialize.js"></script>
 </head>
 <body>
     <section class="header">
@@ -25,18 +29,12 @@
     <!-- 添加表单和搜索区域-->
     <div>
         <!-- 添加用户的表单 -->
-        <div class="enterRegion">
+        <form class="enterRegion">
         <div class="inputRegion">
-        ID：<input type="text" name="userId" placeholder="自动生成用户ID">
-        姓名:<input type="text" name="realName" placeholder="2-10位">
-        年龄:<input type="number" name="userAge"  placeholder="0-120岁">
-        <div class="sex-border">
-        性别:<select name="userSex">
-                <option value="男">男</option>
-                <option value="女">女</option>
-                <option value="保密">保密</option>
-            </select>
-        </div>
+        ID：<input type="number" name="userId" placeholder="自动生成用户ID" id="userId">
+        姓名：<input type="text" name="userName" placeholder="填写用户姓名" id="userName">
+        年龄：<input type="number" name="userAge"  placeholder="填写用户年龄" id="userAge">
+        性别：<input type="text" name="userSex"  placeholder="填写用户性别" id="userSex">
     </div>
         <div class="operatorButton">
         <!-- 加上添加，搜索，修改，重置按钮 -->
@@ -45,11 +43,8 @@
         <button type="submit" id="modifyBtn">修改</button>
         <button type="submit" id="resetBtn">重置</button>
         <!-- 搜索数据的表单 -->
-        <div class="search">
-        <input type="search" name="search" placeholder="任意字段模糊搜索" id="searchInput">
-        </div>
     </div>
-    </div>
+</form>
 
     <!-- 显示面板设置 -->
     </section>
@@ -58,62 +53,31 @@
       <table class="dataTable" id="dataTable">
         <thead>
             <tr>
-                <th>用户编号</th>
+                <th>用户ID</th>
                 <th>用户姓名</th>
                 <th>用户年龄</th>
                 <th>用户性别</th>
-                <th>创建时间</th>
                 <th>操作</th>
             </tr>
-            
         </thead>
-        <tbody>
-            
+        <tbody class="table-tbody">
+            <!-- 具体的表格一栏 -->
+            <tr>
+                <!-- 用户ID单元格 -->
+                <th scope="row">xxx</th>
+                <!-- 用户名字单元格 -->
+                <td>xxx</td>
+                <!-- 用户年龄格 -->
+                <td>xxx</td>
+                <!-- 用户性别格 -->
+                <td>xxx</td>
+                <!-- 操作单元格 -->
+                <td>
+                    <button data-id="${item.id}" class="tableTbodyButton">删除</button>
+                </td>
+              </tr>
         </tbody>
       </table>
     </section>
-    <!-- 遮罩层 -->
-    <div class="mask" id="mask"></div>
-    <!-- 修改框 -->
-    <div class="updatePanle"  id="updatePanle">
-    <span id="closeSpan"><svg t="1681964070828" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2640" width="16" height="16"><path d="M872.802928 755.99406 872.864326 755.99406 872.864326 755.624646Z" fill="#272536" p-id="2641"></path><path d="M927.846568 511.997953c0-229.315756-186.567139-415.839917-415.838893-415.839917-229.329059 0-415.85322 186.524161-415.85322 415.839917 0 229.300406 186.524161 415.84094 415.85322 415.84094C741.278405 927.838893 927.846568 741.29836 927.846568 511.997953M512.007675 868.171955c-196.375529 0-356.172979-159.827125-356.172979-356.174002 0-196.374506 159.797449-356.157629 356.172979-356.157629 196.34483 0 356.144326 159.783123 356.144326 356.157629C868.152001 708.34483 708.352505 868.171955 512.007675 868.171955" fill="#272536" p-id="2642"></path><path d="M682.378947 642.227993 553.797453 513.264806 682.261267 386.229528c11.661597-11.514241 11.749602-30.332842 0.234337-41.995463-11.514241-11.676947-30.362518-11.765975-42.026162-0.222057L511.888971 471.195665 385.223107 344.130711c-11.602246-11.603269-30.393217-11.661597-42.025139-0.059352-11.603269 11.618619-11.603269 30.407544-0.059352 42.011836l126.518508 126.887922L342.137823 639.104863c-11.662621 11.543917-11.780301 30.305213-0.23536 41.96988 5.830799 5.89015 13.429871 8.833179 21.086248 8.833179 7.53972 0 15.136745-2.8847 20.910239-8.569166l127.695311-126.311801L640.293433 684.195827c5.802146 5.8001 13.428847 8.717546 21.056572 8.717546 7.599072 0 15.165398-2.917446 20.968567-8.659217C693.922864 672.681586 693.950494 653.889591 682.378947 642.227993" fill="#272536" p-id="2643"></path></svg></span>
-    <h2>修改界面</h2>
-    <table>
-        <tbody>
-            <tr>
-                <td>用户编号:</td>
-                <td><input type="text" name="updateId" id="updateId" disabled></td>
-                <!-- 不能让用户将用户编号改了，所有加上一个readonly -->
-            </tr>
-            <tr>
-                <td>用户姓名:</td>
-                <td><input type="text" name="updateName" id="updateName"></td>
-            </tr>
-            
-            <tr>
-                <td>用户年龄:</td>
-                <td><input type="number" name="updateAge" id="updateAge"></td>
-            </tr>
-            <tr>
-                <td>用户性别:</td>
-                <td >
-                <!-- 这里可能要加样式修改，注意类和id -->
-                    <select name="updateSex" id="updateSex">
-                        <option value="男">男</option>
-                        <option value="女">女</option>
-                        <option value="保密">保密</option>
-                    </select>
-                </td>
-            </tr>
-            
-            <tr>
-                <td></td>
-                <td><button id="updateBtn">保存修改</button></td><!--对按钮加上事件来进行点击事件操作-->
-            </tr>
-            
-            
-        </tbody>
-    </table>
-    </div>
 </body>
 </html>
